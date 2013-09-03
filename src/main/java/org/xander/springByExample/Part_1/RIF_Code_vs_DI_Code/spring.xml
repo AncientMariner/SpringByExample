@@ -1,0 +1,9 @@
+<!--<bean id="recorder"-->
+      <!--class="com.springindepth.LocalVoteRecorder" />-->
+
+
+
+<!--<bean id="votingBooth"-->
+      <!--class="com.springindepth.VotingBooth">-->
+<!--<property name="voteRecorder" ref="recorder"/>-->
+<!--</bean>-->

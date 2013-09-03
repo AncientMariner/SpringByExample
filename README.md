@@ -1,4 +1,4 @@
 SpringByExample
 ===============
 
-Learning Spring Example
+Learning Spring by Example

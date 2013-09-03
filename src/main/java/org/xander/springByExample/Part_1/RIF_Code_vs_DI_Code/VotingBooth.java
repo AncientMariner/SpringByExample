@@ -1,4 +1,4 @@
-package org.xander.springByExample.Part_1;
+package org.xander.springByExample.Part_1.RIF_Code_vs_DI_Code;
 
 import java.util.HashMap;
 import java.util.Map;
