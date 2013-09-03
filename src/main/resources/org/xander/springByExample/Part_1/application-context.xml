@@ -6,6 +6,6 @@
 
     <bean id="message"
           class="org.xander.springByExample.Part_1.Message">
-        <property name="message" value="Spring is fun." />
+        <property name="message" value="Spring is fun."/>
     </bean>
 </beans>

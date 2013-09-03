@@ -5,14 +5,17 @@ import java.util.Map;
 
 public class VotingBooth {
     VoteRecorder voteRecorder = new VoteRecorder();
+
     public void vote(Candidate candidate) {
         voteRecorder.record(candidate);
     }
+
     class VoteRecorder {
         Map<Candidate, Integer> hVotes = new HashMap();
+
         public void record(Candidate candidate) {
             int count = 0;
-            if (!hVotes.containsKey(candidate)){
+            if (!hVotes.containsKey(candidate)) {
                 hVotes.put(candidate, count);
             } else {
                 count = hVotes.get(candidate);

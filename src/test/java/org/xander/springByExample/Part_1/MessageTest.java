@@ -28,6 +28,6 @@ public class MessageTest {
         String expectedMessage = "Spring is fun";
 
         assertEquals("Message should be '" + expectedMessage + "'.", expectedMessage, msg);
-        logger.info("message='{}'" +  msg);
+        logger.info("message='{}'" + msg);
     }
 }

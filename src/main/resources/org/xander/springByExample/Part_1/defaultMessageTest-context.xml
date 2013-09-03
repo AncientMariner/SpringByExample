@@ -12,17 +12,19 @@
 
     <bean id="Message"
           class="org.xander.springByExample.Part_1.Message">
-        <property name="message" value="Spring is fun" /> <!--via setter-->
+        <property name="message" value="Spring is fun"/>
+        <!--via setter-->
     </bean>
 
 
     <bean id="springMessage" class="java.lang.String">
-        <constructor-arg value="Spring is fun" /> <!--via ref injection-->
+        <constructor-arg value="Spring is fun"/>
+        <!--via ref injection-->
     </bean>
 
     <!--<bean id="setter_message_using_reference_injection"-->
-          <!--class="org.xander.springByExample.Part_1.Message">-->
-        <!--<property name="message" ref="springMessage" />-->
+    <!--class="org.xander.springByExample.Part_1.Message">-->
+    <!--<property name="message" ref="springMessage" />-->
     <!--</bean>-->
 
 </beans>

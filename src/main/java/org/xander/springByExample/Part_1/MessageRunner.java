@@ -16,6 +16,6 @@ public class MessageRunner {
         logger.info("\n\nSpring context initialized.");
 
         Message message = (Message) applicationContext.getBean("message");
-        logger.info("\n\nmessage = '" + message.getMessage()+ "'");
+        logger.info("\n\nmessage = '" + message.getMessage() + "'");
     }
 }
