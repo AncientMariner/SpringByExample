@@ -1,4 +1,4 @@
-SpringByExample
+Spring Framework
 ===============
 
-Learning Spring by Example
+Learning Spring. Example by example
