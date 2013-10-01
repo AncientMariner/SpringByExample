@@ -1,4 +1,4 @@
 Spring Framework
 ===============
 
-Learning Spring. Example by example
+Learning Spring. Step by step
