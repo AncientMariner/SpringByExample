@@ -1,13 +1,11 @@
 package org.xander.spring;
 
 public class Knight {
-    public Knight() {
-    }
+    private Quest quest;
+
     public Knight(Quest quest) {
         this.quest = quest;
     }
-
-    private Quest quest;
 
     public void embarkOnQuest() {
         quest.embark();
