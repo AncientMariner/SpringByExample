@@ -16,14 +16,15 @@ public class PerformerMain {
         poeticPerformer.perform();
         System.out.println();
 
-        Stage stage1= (Stage) ctx.getBean("stage");
-        Stage stage2= (Stage) ctx.getBean("stage");
+        Stage stage1 = (Stage) ctx.getBean("stage");
+        Stage stage2 = (Stage) ctx.getBean("stage");
 
         if (stage1.equals(stage2)) {
             System.out.println("There is only one stage");
         } else {
             System.out.println("Stage is different");
         }
+        System.out.println();
 
         Ticket ticket1 = (Ticket) ctx.getBean("ticket");
         Ticket ticket2 = (Ticket) ctx.getBean("ticket");
@@ -33,7 +34,21 @@ public class PerformerMain {
         } else {
             System.out.println("Tickets are different");
         }
+        System.out.println();
 
+
+
+        Performer performerKenny = (Performer) ctx.getBean("kennySaxophonist");
+        performerKenny.perform();
+        System.out.println();
+
+        Performer performerHank = (Performer) ctx.getBean("hank");
+        performerHank.perform();
+        System.out.println();
+
+        Performer advancedBand = (Performer) ctx.getBean("advancedBand");
+        advancedBand.perform();
+        System.out.println();
 
         Auditorium auditorium = (Auditorium) ctx.getBean("auditorium");
         ctx.close();

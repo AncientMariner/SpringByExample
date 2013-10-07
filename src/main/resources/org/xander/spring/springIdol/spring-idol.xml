@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -22,6 +23,9 @@
     <bean id="poeticDuke" class="org.xander.spring.springIdol.PoeticJuggler">
         <constructor-arg value="10" />
         <constructor-arg ref="sonnet29" />
+        <!--<constructor-arg>-->
+            <!--<bean class="org.xander.spring.springIdol.Sonnet29" />-->
+        <!--</constructor-arg>-->
     </bean>
 
     <bean id="stage" class="org.xander.spring.springIdol.Stage"
@@ -32,4 +36,67 @@
     <bean id="auditorium" class="org.xander.spring.springIdol.Auditorium"
           init-method="turnOnTheLights"
           destroy-method="turnOffTheLights"/>
+
+
+    <bean id="saxophone" class="org.xander.spring.springIdol.Saxophone" />
+
+    <bean id="kennySaxophonist" class="org.xander.spring.springIdol.Instrumentalist">
+        <property name="song" value="Jingle Bells"/>
+        <property name="instrument" ref="saxophone"/>
+    </bean>
+
+    <bean id="kennySinger" class="org.xander.spring.springIdol.Instrumentalist">
+        <property name="song" value="Jingle Bells"/>
+        <property name="instrument" ref="harmonica"/>
+        <!--<property name="age"  value="37"/>-->
+    </bean>
+
+    <bean id="otherKenny" class="org.xander.spring.springIdol.Instrumentalist"
+        p:song="Jingle Bells"
+        p:instrument-ref="saxophone" />
+        <!--<property name="instrument" >-->
+            <!--<bean class="org.xander.spring.springIdol.Saxophone" />-->
+        <!--</property>-->
+
+    <bean id="guitar" class="org.xander.spring.springIdol.Guitar" />
+    <bean id="harmonica" class="org.xander.spring.springIdol.Harmonica" />
+
+
+    <bean id="hank" class="org.xander.spring.springIdol.OneManBand">
+        <property name="instruments">
+            <list>
+                <ref bean="guitar" />
+                <ref bean="harmonica" />
+            </list>
+
+            <!--<set>-->
+                <!--<ref bean="guitar" />-->
+                <!--<ref bean="guitar" />-->
+                <!--<ref bean="harmonica" />-->
+                <!--<ref bean="harmonica" />-->
+            <!--</set>-->
+
+        </property>
+    </bean>
+
+    <bean id="advancedBand" class="org.xander.spring.springIdol.OneManAdvancedBand">
+        <property name="instruments">
+            <map>
+                <entry key="GUITAR" value-ref="guitar"/>
+                <entry key="HARMONICA" value-ref="harmonica"/>
+            </map>
+
+
+            <!--<props>-->
+                <!--<prop key="GUITAR">STRUM STRUM STRUM</prop>-->
+                <!--<prop key="CYMBAL">CRASH CRASH CRASH</prop>-->
+                <!--<prop key="HARMONICA">HUM HUM HUM</prop>-->
+            <!--</props>-->
+        </property>
+
+
+        <!--<property name="nullProperty"><null> /></property>-->
+    </bean>
+
+
 </beans>
