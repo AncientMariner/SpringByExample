@@ -3,11 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
        <!--default-init-method="turnOnLights"-->
        <!--default-destroy-method="turnOffLights"-->
 
@@ -18,10 +22,9 @@
     </bean>
 
     <bean id="sonnet29" class="org.xander.spring.springIdol.Sonnet29">
-
     </bean>
     <bean id="poeticDuke" class="org.xander.spring.springIdol.PoeticJuggler">
-        <constructor-arg value="10" />
+        <constructor-arg value="#{(T(java.lang.Math).random() * 4)^2}" />
         <constructor-arg ref="sonnet29" />
         <!--<constructor-arg>-->
             <!--<bean class="org.xander.spring.springIdol.Sonnet29" />-->
@@ -37,16 +40,15 @@
           init-method="turnOnTheLights"
           destroy-method="turnOffTheLights"/>
 
-
     <bean id="saxophone" class="org.xander.spring.springIdol.Saxophone" />
 
     <bean id="kennySaxophonist" class="org.xander.spring.springIdol.Instrumentalist">
-        <property name="song" value="Jingle Bells"/>
+        <!--<property name="song" value="Jingle Bells"/>-->
         <property name="instrument" ref="saxophone"/>
     </bean>
 
     <bean id="kennySinger" class="org.xander.spring.springIdol.Instrumentalist">
-        <property name="song" value="Jingle Bells"/>
+        <property name="song" value="#{'Jingle Bells'}"/>
         <property name="instrument" ref="harmonica"/>
         <!--<property name="age"  value="37"/>-->
     </bean>
@@ -58,7 +60,10 @@
             <!--<bean class="org.xander.spring.springIdol.Saxophone" />-->
         <!--</property>-->
 
-    <bean id="guitar" class="org.xander.spring.springIdol.Guitar" />
+    <bean id="guitar" class="org.xander.spring.springIdol.Guitar" >
+        <property name="numberOfStrings" value="#{1e3}"/>
+    </bean>
+
     <bean id="harmonica" class="org.xander.spring.springIdol.Harmonica" />
 
 
@@ -68,14 +73,12 @@
                 <ref bean="guitar" />
                 <ref bean="harmonica" />
             </list>
-
             <!--<set>-->
                 <!--<ref bean="guitar" />-->
                 <!--<ref bean="guitar" />-->
                 <!--<ref bean="harmonica" />-->
                 <!--<ref bean="harmonica" />-->
             <!--</set>-->
-
         </property>
     </bean>
 
@@ -84,9 +87,8 @@
             <map>
                 <entry key="GUITAR" value-ref="guitar"/>
                 <entry key="HARMONICA" value-ref="harmonica"/>
+                <entry key="#{T(java.lang.Math).PI}" value-ref="harmonica"/>
             </map>
-
-
             <!--<props>-->
                 <!--<prop key="GUITAR">STRUM STRUM STRUM</prop>-->
                 <!--<prop key="CYMBAL">CRASH CRASH CRASH</prop>-->
@@ -98,5 +100,61 @@
         <!--<property name="nullProperty"><null> /></property>-->
     </bean>
 
+    <bean id="carl" class="org.xander.spring.springIdol.Instrumentalist">
 
+       <!--<property name="song" value="#{kennySaxophonist.song?.toUpperCase()}"/> &lt;!&ndash; try to remove ? and see the null pointer&ndash;&gt;-->
+        <!--elvis operator-->
+       <property name="song" value="#{kennySaxophonist.song ?: 'GreenLeaves'}"/> <!-- if song is null - use GreenLeaves-->
+
+        <!--<property name="instrument" value="#{guitar}"/>-->
+        <property name="instrument"
+                  value="#{'Jingle Bells'.substring(0, 6).equals('Jingle')?guitar:saxophone}"/>  <!--condition-->
+
+        <!--<property name="quality" value="#{5 == <= >= ! le eq lt le 3 and or not ! 5==5}"/>-->
+        <!--<property name="largeCircle"-->
+                  <!--value="#{shape.kind == 'circle' and shape.perimeter gt 10000}"/>-->
+
+        <!--<property name="validEmail" value=-->
+                <!--"#{admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com'}"/>     regex  -->
+
+    </bean>
+
+    <util:list id="cities">
+        <bean id="Chicago" class="org.xander.spring.springIdol.City"
+              p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Atlanta" p:state="GA" p:population="537958"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Dallas" p:state="TX" p:population="1279910"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Houston" p:state="TX" p:population="2242193"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Odessa" p:state="TX" p:population="90943"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="El Paso" p:state="TX" p:population="613190"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Jal" p:state="NM" p:population="1996"/>
+        <bean class="org.xander.spring.springIdol.City"
+              p:name="Las Cruces" p:state="NM" p:population="91865"/>
+    </util:list>
+
+    <bean id="countryDescription" class="org.xander.spring.springIdol.CountryDescription">
+        <!--<constructor-arg value="#{cities[T(java.lang.Math).random() * cities.size()]}"/>-->
+        <!--<constructor-arg value="#{cities.^[population gt 100000]}"/>-->
+        <constructor-arg value="#{cities.$[population gt 100000]}"/>
+        <!--^[] and .$[], for selecting the first-->
+        <!--and last matching items (respectively) from a collection.-->
+
+
+        <property name="emptyString" value="#{systemEnvironment['HOME']}"/>
+        <!--<property name="emptyString" value="#{systemProperties['application.home']}"/>   check for VM option-->
+        <!--<property name="list" value="#{cities.![name]}" />-->
+        <!--<property name="list" value="#{cities.![name + ', ' + state]}"/>-->
+        <property name="list"
+                  value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>
+    </bean>
+
+    <!--<util:properties id="settings"-->
+                     <!--location="classpath:settings.properties"/>-->
+    <!--'This is a test'[3]  checks for s-->
 </beans>

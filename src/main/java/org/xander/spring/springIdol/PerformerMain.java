@@ -50,6 +50,15 @@ public class PerformerMain {
         advancedBand.perform();
         System.out.println();
 
+        Performer carl = (Performer) ctx.getBean("carl");
+        carl.perform();
+        System.out.println();
+
+        CountryDescription countryDescription = (CountryDescription) ctx.getBean("countryDescription");
+        System.out.println(countryDescription.getCity().getName());
+        System.out.println(countryDescription.getEmptyString());
+        System.out.println(countryDescription.getList());
+
         Auditorium auditorium = (Auditorium) ctx.getBean("auditorium");
         ctx.close();
     }
