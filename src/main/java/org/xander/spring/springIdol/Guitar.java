@@ -1,5 +1,8 @@
 package org.xander.spring.springIdol;
 
+//@Qualifier("stringed")
+@StringedInstrument
+@Strummed
 public class Guitar implements Instrument {
     private int numberOfStrings;
 

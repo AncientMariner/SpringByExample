@@ -4,6 +4,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/beans
@@ -11,7 +12,7 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd">
+       http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
        <!--default-init-method="turnOnLights"-->
        <!--default-destroy-method="turnOffLights"-->
 
@@ -61,10 +62,15 @@
         <!--</property>-->
 
     <bean id="guitar" class="org.xander.spring.springIdol.Guitar" >
+        <!--<qualifier value="stringed"/>-->
+        <!--<qualifier value="strummed"/>-->
         <property name="numberOfStrings" value="#{1e3}"/>
     </bean>
 
     <bean id="harmonica" class="org.xander.spring.springIdol.Harmonica" />
+    <bean id="piano" class="org.xander.spring.springIdol.Piano" >
+        <qualifier value="yamaha"/>
+    </bean>
 
 
     <bean id="hank" class="org.xander.spring.springIdol.OneManBand">
@@ -157,4 +163,7 @@
     <!--<util:properties id="settings"-->
                      <!--location="classpath:settings.properties"/>-->
     <!--'This is a test'[3]  checks for s-->
+
+    <context:annotation-config />
+
 </beans>

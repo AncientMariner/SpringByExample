@@ -1,7 +1,15 @@
 package org.xander.spring.springIdol;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class Instrumentalist implements Performer {
     private String song;
+
+    //    @Autowired(required = false) indicates it is possible to set null here if bean is absent
+    @Autowired
+//    @Qualifier("yamaha")
+    @StringedInstrument  //may conflict if qualifier is already defined in .xml
+    @Strummed
     private Instrument instrument;
 
     public Instrumentalist() {
