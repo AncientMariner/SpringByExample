@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class Instrumentalist implements Performer {
     private String song;
-
     //    @Autowired(required = false) indicates it is possible to set null here if bean is absent
     @Autowired
 //    @Qualifier("yamaha")

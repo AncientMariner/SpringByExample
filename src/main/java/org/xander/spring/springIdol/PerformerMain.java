@@ -59,6 +59,21 @@ public class PerformerMain {
         System.out.println(countryDescription.getEmptyString());
         System.out.println(countryDescription.getList());
 
+        System.out.println();
+        Performer knifeJuggler = (Performer) ctx.getBean("knifeJuggler");
+        knifeJuggler.perform();
+        System.out.println();
+
+        Performer danny = (Performer) ctx.getBean("danny");
+        danny.perform();
+        System.out.println();
+
+
+        Performer eddie = (Performer) ctx.getBean("eddie");
+        eddie.perform();
+        System.out.println();
+
+
         Auditorium auditorium = (Auditorium) ctx.getBean("auditorium");
         ctx.close();
     }

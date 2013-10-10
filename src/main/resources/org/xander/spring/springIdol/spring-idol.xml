@@ -164,6 +164,37 @@
                      <!--location="classpath:settings.properties"/>-->
     <!--'This is a test'[3]  checks for s-->
 
-    <context:annotation-config />
+    <!--When you added <context:annotation-config> to your Spring configuration, you-->
+    <!--told Spring that you wanted it to honor a certain set of annotations in the beans that-->
+    <!--you declared and to use those beans to guide bean wiring.-->
+    <!--<context:annotation-config />-->
 
+
+    <!--The <context:component-scan> element works by scanning a package and all of its-->
+    <!--subpackages, looking for classes that could be automatically registered as beans in the-->
+    <!--Spring container.-->
+    <!--By default, <context:component-scan> looks for classes that are annotated with one-->
+    <!--of a handful of special stereotype annotations:-->
+    <!--- @Component—A general-purpose stereotype annotation indicating that the class-->
+    <!--is a Spring component-->
+    <!---@Controller—Indicates that the class defines a Spring MVC controller-->
+    <!---@Repository—Indicates that the class defines a data repository-->
+    <!---@Service—Indicates that the class defines a service-->
+    <!--Any custom annotation that is itself annotated with @Component-->
+
+    <context:component-scan base-package="org.xander.spring.springIdol" >
+        <context:include-filter type="assignable"
+                                expression="org.xander.spring.springIdol.Instrument"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.xander.spring.springIdol.SkipIt"/>
+    </context:component-scan>
+
+    <bean id="knife" class="org.xander.spring.springIdol.Knife" scope="prototype" />
+
+    <bean id="knifeJuggler" class="org.xander.spring.springIdol.KnifeJuggler">
+        <constructor-arg ref="knife"/>
+    </bean>
+
+    <bean id="danny" class="org.xander.spring.springIdol.Instrumentalist"
+          p:instrument-ref="saxophone" />
 </beans>
