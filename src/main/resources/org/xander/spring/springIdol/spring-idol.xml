@@ -169,7 +169,6 @@
     <!--you declared and to use those beans to guide bean wiring.-->
     <!--<context:annotation-config />-->
 
-
     <!-- The <context:component-scan> element works by scanning a package and all of its-->
     <!-- subpackages, looking for classes that could be automatically registered as beans in the-->
     <!-- Spring container.-->
