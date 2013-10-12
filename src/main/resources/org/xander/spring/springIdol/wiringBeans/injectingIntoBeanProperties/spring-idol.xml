@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+
+<bean id="kennySaxophonist" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Instrumentalist">
+        <!--<property name="song" value="Jingle Bells"/>-->
+        <property name="instrument" ref="saxophone"/>
+    </bean>
+
+    <bean id="kennySinger" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Instrumentalist">
+        <property name="song" value="#{'Jingle Bells'}"/>
+        <property name="instrument" >
+            <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Harmonica" />
+        </property>
+    </bean>
+
+    <bean id="otherKenny" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Instrumentalist"
+          p:song="Jingle Bells"
+          p:instrument-ref="saxophone" />
+
+    <bean id="duke" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.PoeticJuggler">
+        <constructor-arg value="#{(T(java.lang.Math).random() * 4)^2}" />
+        <constructor-arg>
+            <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Sonnet29" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="saxophone" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Saxophone" />
+    <bean id="harmonica" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Harmonica" />
+    <bean id="piano" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Piano" />
+    <bean id="guitar" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Guitar" >
+        <property name="numberOfStrings" value="#{1e3}"/>
+    </bean>
+
+    <bean id="hank" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.OneManBand">
+        <property name="instruments">
+            <list>
+                <ref bean="guitar" />
+                <ref bean="harmonica" />
+            </list>
+            <!--<set>-->
+            <!--<ref bean="guitar" />-->
+            <!--<ref bean="guitar" />-->
+            <!--<ref bean="harmonica" />-->
+            <!--<ref bean="harmonica" />-->
+            <!--</set>-->
+        </property>
+    </bean>
+
+    <bean id="advancedBand" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.OneManAdvancedBand">
+        <property name="instruments">
+            <map>
+                <entry key="GUITAR" value="#{guitar}"/>
+                <entry key="HARMONICA" value-ref="harmonica"/>
+                <entry key="#{T(java.lang.Math).PI}" value-ref="harmonica"/>
+            </map>
+            <!--<props>-->
+            <!--<prop key="GUITAR">STRUM STRUM STRUM</prop>-->
+            <!--<prop key="CYMBAL">CRASH CRASH CRASH</prop>-->
+            <!--<prop key="HARMONICA">HUM HUM HUM</prop>-->
+            <!--</props>-->
+        </property>
+        <!--<property name="nullProperty"><null> /></property>-->
+    </bean>
+
+    <bean id="carl" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.Instrumentalist">
+
+        <!--<property name="song" value="#{kennySaxophonist.song?.toUpperCase()}"/> &lt;!&ndash; try to remove ? and see the null pointer&ndash;&gt;-->
+        <!--elvis operator ?:  -->
+        <property name="song" value="#{kennySaxophonist.song?.toUpperCase() ?: 'GreenLeaves'}"/> <!-- if song is null - use GreenLeaves-->
+
+        <!--<property name="instrument" value="#{guitar}"/>-->
+        <property name="instrument"
+                  value="#{'Jingle Bells'.substring(0, 6).equals('Jingle')?guitar:saxophone}"/>  <!--condition-->
+
+        <!--<property name="quality" value="#{5 == <= >= ! le eq lt le 3 and or not ! 5==5}"/>-->
+        <!--<property name="largeCircle"-->
+        <!--value="#{shape.kind == 'circle' and shape.perimeter gt 10000}"/>-->
+
+        <!--<property name="validEmail" value=-->
+        <!--"#{admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com'}"/>     regex  -->
+    </bean>
+
+
+
+
+    <util:list id="cities">
+        <bean id="Chicago" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Atlanta" p:state="GA" p:population="537958"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Dallas" p:state="TX" p:population="1279910"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Houston" p:state="TX" p:population="2242193"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Odessa" p:state="TX" p:population="90943"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="El Paso" p:state="TX" p:population="613190"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Jal" p:state="NM" p:population="1996"/>
+        <bean class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.City"
+              p:name="Las Cruces" p:state="NM" p:population="91865"/>
+    </util:list>
+
+    <bean id="countryDescription" class="org.xander.spring.springIdol.wiringBeans.injectingIntoBeanProperties.CountryDescription">
+        <!--<constructor-arg value="#{cities[T(java.lang.Math).random() * cities.size()]}"/>-->
+        <!--<constructor-arg value="#{cities.^[population gt 100000]}"/>-->
+        <constructor-arg value="#{cities.$[population gt 100000]}"/>
+        <!--^[] and .$[], for selecting the first-->
+        <!--and last matching items (respectively) from a collection.-->
+
+
+        <property name="emptyString" value="#{systemEnvironment['HOME']}"/>
+        <!--<property name="emptyString" value="#{systemProperties['application.home']}"/>   check for VM option-->
+        <!--<property name="list" value="#{cities.![name]}" />-->
+        <!--<property name="list" value="#{cities.![name + ', ' + state]}"/>-->
+        <property name="list"
+                  value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>
+    </bean>
+
+
+
+</beans>

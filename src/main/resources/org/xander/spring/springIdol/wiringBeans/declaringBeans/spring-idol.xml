@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+       <!--default-init-method="turnOnLights"-->
+       <!--default-destroy-method="turnOffLights"-->
+
+    <bean id="duke" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Juggler" />
+
+    <bean id="dukeMightyJuggler" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Juggler">
+        <constructor-arg value="#{25}"/>
+    </bean>
+
+    <bean id="sonnet29" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Sonnet29">
+    </bean>
+    <bean id="poeticDuke" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.PoeticJuggler">
+        <constructor-arg value="#{(T(java.lang.Math).random() * 4)^2}" />
+        <constructor-arg ref="sonnet29" />
+    </bean>
+
+    <bean id="stage" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Stage"
+          factory-method="getInstance" />
+
+    <bean id="ticket" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Ticket" scope="prototype" />
+
+
+    <bean id="auditorium" class="org.xander.spring.springIdol.wiringBeans.declaringBeans.Auditorium"
+          init-method="turnOnTheLights"
+          destroy-method="turnOffTheLights"/>
+
+</beans>

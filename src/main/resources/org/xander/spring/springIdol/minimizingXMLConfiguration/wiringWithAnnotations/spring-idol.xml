@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--<bean id="kennySaxophonist" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Instrumentalist">-->
+        <!--<property name="song" value="Jingle Bells"/>-->
+        <!--<property name="instrument" ref="saxophone"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="kenny" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Instrumentalist"-->
+          <!--autowire="byName">-->
+        <!--<property name="song" value="Jingle Bells" />-->
+    <!--</bean>-->
+
+    <!--<bean id="otherKenny" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Instrumentalist"-->
+          <!--p:song="Jingle Bells"-->
+          <!--p:instrument-ref="saxophone" />-->
+
+    <!--<bean id="saxophone" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Saxophone" />-->
+    <!--<bean id="harmonica" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Harmonica" />-->
+
+    <!--<bean id="piano" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Piano" >-->
+        <!--<qualifier value="yamaha"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="guitar" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Guitar" >-->
+        <!--<qualifier value="stringed"/>-->
+        <!--&lt;!&ndash;<qualifier value="strummed"/>&ndash;&gt;-->
+        <!--<property name="numberOfStrings" value="#{1e3}"/>-->
+    <!--</bean>-->
+
+
+    <!--When you added <context:annotation-config> to your Spring configuration, you-->
+    <!--told Spring that you wanted it to honor a certain set of annotations in the beans that-->
+    <!--you declared and to use those beans to guide bean wiring.-->
+    <context:annotation-config />
+
+
+    <bean id="knife" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.Knife" scope="prototype" />
+
+    <bean id="knifeJuggler" class="org.xander.spring.springIdol.minimizingXMLConfiguration.wiringWithAnnotations.KnifeJuggler">
+        <constructor-arg ref="knife"/>
+    </bean>
+
+
+</beans>
