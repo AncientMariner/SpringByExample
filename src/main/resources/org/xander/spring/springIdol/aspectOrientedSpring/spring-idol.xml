@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="magician" class="org.xander.spring.springIdol.aspectOrientedSpring.Magician">
+        <constructor-arg value="Ace of Spades" />
+    </bean>
+    <bean id="audience" class="org.xander.spring.springIdol.aspectOrientedSpring.Audience" />
+
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="performance" expression= "execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
+
+        <!--<aop:aspect ref="audience">-->
+            <!--<aop:before method="takeSeats" pointcut-ref="performance" />-->
+            <!--<aop:before method="turnOffCellPhones" pointcut-ref="performance" />-->
+
+            <!--<aop:after-returning method="applaud" pointcut-ref="performance" />-->
+            <!--<aop:after-throwing method="demandRefund" pointcut="execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+    <aop:config>
+        <aop:pointcut id="anotherPerformance" expression= "execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />
+
+        <aop:aspect ref="audience">
+            <aop:around method="watchPerformance" pointcut-ref="anotherPerformance" />
+        </aop:aspect>
+    </aop:config>
+
+
+    <!--<aop:config>-->
+        <!--<aop:aspect ref="magician">-->
+            <!--<aop:pointcut id="thinking" expression="execution(* org.xander.spring.springIdol.aspectOrientedSpring.Thinker.thinkOfSomething())" />-->
+            <!--<aop:before method="interceptThoughts" pointcut-ref="thinking"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+</beans>
