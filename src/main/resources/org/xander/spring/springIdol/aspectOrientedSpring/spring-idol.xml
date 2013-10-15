@@ -13,17 +13,18 @@
         <constructor-arg value="Ace of Spades" />
     </bean>
     <bean id="audience" class="org.xander.spring.springIdol.aspectOrientedSpring.Audience" />
+    <bean id="volunteer" class="org.xander.spring.springIdol.aspectOrientedSpring.Volunteer" />
 
     <!--<aop:config>-->
-        <!--<aop:pointcut id="performance" expression= "execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
+    <!--<aop:pointcut id="performance" expression= "execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
 
-        <!--<aop:aspect ref="audience">-->
-            <!--<aop:before method="takeSeats" pointcut-ref="performance" />-->
-            <!--<aop:before method="turnOffCellPhones" pointcut-ref="performance" />-->
+    <!--<aop:aspect ref="audience">-->
+    <!--<aop:before method="takeSeats" pointcut-ref="performance" />-->
+    <!--<aop:before method="turnOffCellPhones" pointcut-ref="performance" />-->
 
-            <!--<aop:after-returning method="applaud" pointcut-ref="performance" />-->
-            <!--<aop:after-throwing method="demandRefund" pointcut="execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
-        <!--</aop:aspect>-->
+    <!--<aop:after-returning method="applaud" pointcut-ref="performance" />-->
+    <!--<aop:after-throwing method="demandRefund" pointcut="execution(* org.xander.spring.springIdol.aspectOrientedSpring.MindReader.interceptThoughts(..))" />-->
+    <!--</aop:aspect>-->
     <!--</aop:config>-->
 
     <aop:config>
@@ -34,10 +35,9 @@
         </aop:aspect>
     </aop:config>
 
-
     <!--<aop:config>-->
         <!--<aop:aspect ref="magician">-->
-            <!--<aop:pointcut id="thinking" expression="execution(* org.xander.spring.springIdol.aspectOrientedSpring.Thinker.thinkOfSomething())" />-->
+            <!--<aop:pointcut id="thinking" expression="execution(* org.xander.spring.springIdol.aspectOrientedSpring.Thinker.thinkOfSomething(String)) and args(String))" />-->
             <!--<aop:before method="interceptThoughts" pointcut-ref="thinking"/>-->
         <!--</aop:aspect>-->
     <!--</aop:config>-->
