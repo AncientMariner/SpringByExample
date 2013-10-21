@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!--<bean id="sessionFactory"-->
+          <!--class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <!--<property name="mappingResources">-->
+            <!--<list>-->
+                <!--<value>Spitter.hbm.xml </value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="packagesToScan"
+              value="org.xander.spring.springIdol.workingWithDatabase" />
+        <!--<property name="packagesToScan">-->
+            <!--<list>-->
+                <!--<value>com.habuma.spitter.domain</value>-->
+            <!--</list>-->
+        <!--</property>-->
+
+        <!--<property name="annotatedClasses">-->
+            <!--<list>-->
+                <!--<value>com.habuma.spitter.domain.Spitter</value>-->
+                <!--<value>com.habuma.spitter.domain.Spittle</value>-->
+            <!--</list>-->
+        <!--</property>-->
+
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <context:component-scan base-package="org.xander.spring.springIdol.workingWithDatabase" />
+
+    <!--To add exception translation to a template-less Hibernate DAO, we just need to-->
+    <!--add a PersistenceExceptionTranslationPostProcessor bean to the Spring application context -->
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <!--application managed jpa-->
+    <bean id="emf"
+          class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="spitterPU" />
+    </bean>
+
+    <!--container managed jpa-->
+    <!--<bean id="emf" class=-->
+            <!--"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <!--<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />-->
+    <!--</bean>-->
+
+    <bean id="jpaVendorAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="HSQL" />
+        <property name="showSql" value="true"/>
+        <property name="generateDdl" value="false"/>
+        <property name="databasePlatform"
+                  value="org.hibernate.dialect.HSQLDialect" />
+    </bean>
+
+    <!--PULLING AN ENTITYMANAGERFACTORY FROM JNDI-->
+    <!--<jee:jndi-lookup id="emf" jndi-name="persistence/spitterPU" />-->
+
+    <!--Note that the em property is annotated with @PersistentContext. Put plainly, that-->
+    <!--annotation indicates that an instance of EntityManager should be injected into em. To-->
+    <!--enable EntityManager injection in Spring, we’ll need to configure a Persistence-->
+    <!--AnnotationBeanPostProcessor in Spring’s application context:-->
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+
+
+
+</beans>
