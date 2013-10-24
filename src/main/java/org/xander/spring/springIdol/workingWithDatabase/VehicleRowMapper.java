@@ -1,11 +1,13 @@
 package org.xander.spring.springIdol.workingWithDatabase;
 
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class VehicleRowMapper implements RowMapper<Vehicle> {
+public class VehicleRowMapper implements ParameterizedRowMapper<Vehicle>
+                                //        RowMapper<Vehicle>
+{
     public Vehicle mapRow(ResultSet rs, int rowNum) throws SQLException {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleNo(rs.getString("VEHICLE_NO"));

@@ -34,8 +34,10 @@ public class JdbcVehicleDao implements VehicleDao {
         String sql = "INSERT INTO VEHICLE (VEHICLE_NO, COLOR, WHEEL, SEAT) "
                 + "VALUES (?, ?, ?, ?)";
         Connection conn = null;
+//  check for connection information      conn.getMetaData().getDatabaseProductName();
         try {
             conn = dataSource.getConnection();
+            System.out.println(conn.getMetaData().getDatabaseProductName());
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, vehicle.getVehicleNo());
             ps.setString(2, vehicle.getColor());
@@ -95,7 +97,9 @@ public class JdbcVehicleDao implements VehicleDao {
                 + "VALUES (?, ?, ?, ?)";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(sql, new Object[] { vehicle.getVehicleNo(),
-                vehicle.getColor(),vehicle.getWheel(), vehicle.getSeat() });
+                                                vehicle.getColor(),
+                                                vehicle.getWheel(),
+                                                vehicle.getSeat() });
     }
 
     public void insertBatch(final List<Vehicle> vehicles) {
@@ -116,6 +120,19 @@ public class JdbcVehicleDao implements VehicleDao {
             }
         });
     }
+
+    //insert batch using SimpleJdbcDaSupport
+//    public void insertBatch(List<Vehicle> vehicles) {
+//        String sql = "INSERT INTO VEHICLE (VEHICLE_NO, COLOR, WHEEL, SEAT) "
+//                + "VALUES (?, ?, ?, ?)";
+//        List<Object[]> parameters = new ArrayList<Object[]>();
+//        for (Vehicle vehicle : vehicles) {
+//            parameters.add(new Object[] { vehicle.getVehicleNo(),
+//                    vehicle.getColor(), vehicle.getWheel(), vehicle.getSeat() });
+//        }
+//        getSimpleJdbcTemplate().batchUpdate(sql, parameters);
+//    }
+
 
     public Vehicle findByVehicleNoPlainJdbc(String vehicleNo) {
         String sql = "SELECT * FROM VEHICLE WHERE VEHICLE_NO = ?";
@@ -188,6 +205,25 @@ public class JdbcVehicleDao implements VehicleDao {
         return vehicle;
     }
 
+//    extending SimpleJdbcDaoSupport
+//    public Vehicle findByVehicleNo(String vehicleNo) {
+//        String sql = "SELECT * FROM VEHICLE WHERE VEHICLE_NO = ?";
+//// No need to cast into Vehicle anymore.
+//        Vehicle vehicle = getSimpleJdbcTemplate().queryForObject(sql,
+//                new VehicleRowMapper(), vehicleNo);
+//        return vehicle;
+//    }
+
+//    public Vehicle findByVehicleNo(String vehicleNo) {
+//        String sql = "SELECT * FROM VEHICLE WHERE VEHICLE_NO = ?";
+//        Vehicle vehicle = getSimpleJdbcTemplate().queryForObject(sql,
+//                ParameterizedBeanPropertyRowMapper.newInstance(Vehicle.class),
+//                vehicleNo);
+//        return vehicle;
+//    }
+
+
+
     public List<Vehicle> findAll() {
         String sql = "SELECT * FROM VEHICLE";
         RowMapper<Vehicle> rm =
@@ -197,6 +233,15 @@ public class JdbcVehicleDao implements VehicleDao {
         return vehicles;
     }
 
+//    public List<Vehicle> findAll() {
+//        String sql = "SELECT * FROM VEHICLE";
+//        List<Vehicle> vehicles = getSimpleJdbcTemplate().query(sql,
+//                ParameterizedBeanPropertyRowMapper.newInstance(Vehicle.class));
+//        return vehicles;
+//    }
+
+
+
     public String getColor(String vehicleNo) {
         String sql = "SELECT COLOR FROM VEHICLE WHERE VEHICLE_NO = ?";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -204,6 +249,17 @@ public class JdbcVehicleDao implements VehicleDao {
                 new Object[] { vehicleNo }, String.class);
         return color;
     }
+
+//    public String getColor(String vehicleNo) {
+//        String sql = "SELECT COLOR FROM VEHICLE WHERE VEHICLE_NO = ?";
+//// No need to cast into String anymore.
+//        String color = getSimpleJdbcTemplate().queryForObject(sql,
+//                String.class, vehicleNo);
+//        return color;
+//    }
+//
+
+
     public int countAll() {
         String sql = "SELECT COUNT(*) FROM VEHICLE";
         jdbcTemplate = new JdbcTemplate(dataSource);

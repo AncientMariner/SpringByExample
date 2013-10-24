@@ -49,5 +49,33 @@
         <!--<property name="jndiName" value="jdbc/VehicleDS" />-->
     <!--</bean>-->
 
+<!--exception overwrite for Derby Db-->
+    <!--<bean id="Derby"-->
+          <!--class="org.springframework.jdbc.support.SQLErrorCodes">-->
+        <!--<property name="databaseProductName">-->
+            <!--<value>Apache Derby</value>-->
+        <!--</property>-->
+        <!--<property name="useSqlStateForTranslation">-->
+            <!--<value>true</value>-->
+        <!--</property>-->
+        <!--<property name="customTranslations">-->
+            <!--<list>-->
+                <!--<ref local="myDuplicateKeyTranslation" />-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="myDuplicateKeyTranslation"-->
+          <!--class="org.springframework.jdbc.support.CustomSQLErrorCodesTranslation">-->
+        <!--<property name="errorCodes">-->
+            <!--<value>23505</value>-->
+        <!--</property>-->
+        <!--<property name="exceptionClass">-->
+            <!--<value>-->
+                <!--org.xander.spring.springIdol.workingWithDatabase.MyDuplicateKeyException-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
 
 </beans>
