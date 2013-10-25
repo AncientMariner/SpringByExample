@@ -1,0 +1,37 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<!--<session-factory>-->
+<!--<property name="connection.driver_class">-->
+<!--com.mysql.jdbc.Driver-->
+<!--</property>-->
+<!--<property name="connection.url">-->
+<!--jdbc:mysql://localhost/course-->
+<!--</property>-->
+<!--<property name="connection.username">root</property>-->
+<!--<property name="connection.password">xander</property>-->
+<!--<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>-->
+<!--<property name="show_sql">true</property>-->
+<!--&lt;!&ndash;Hibernate can help you to update the database&ndash;&gt;-->
+<!--&lt;!&ndash;schema and create the tables when necessary. Naturally, you shouldn’t enable this in production, but it&ndash;&gt;-->
+<!--&lt;!&ndash;can be a great speed boost for development.&ndash;&gt;-->
+<!--<property name="hbm2ddl.auto">update</property>-->
+<!--<mapping resource="org/xander/spring/springIdol/workingWithDatabase/orm/Course.hbm.xml" />-->
+
+<!--&lt;!&ndash; For JPA annotations &ndash;&gt;-->
+<!--<mapping class="org.xander.spring.springIdol.workingWithDatabase.orm.CourseAnnotated" />-->
+
+<!--</session-factory>-->
+
+    <session-factory>
+        <!-- Don't need to specify mapping files and annotated classes -->
+        <!--
+        <mapping resource="com/apress/springrecipes/course/
+        Course.hbm.xml" />
+        <mapping class="com.apress.springrecipes.course.Course" />
+        -->
+        <!-- For JPA annotations -->
+        <!--<mapping class="org.xander.spring.springIdol.workingWithDatabase.orm.CourseAnnotated" />-->
+    </session-factory>
+</hibernate-configuration>
