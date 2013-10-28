@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+
+    <bean id="courseDao"
+          class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!--<property name="configLocation" value="classpath:hibernate.cfg.xml" />-->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>org.xander.spring.springIdol.workingWithDatabase.orm.CourseAnnotated</value>
+            </list>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+    <!--now works without hibernate.cfg.xml-->
+
+
+
+    <!--<bean id="sessionFactory"-->
+          <!--class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
+        <!--...-->
+        <!--<property name="mappingLocations">-->
+            <!--<list>-->
+                <!--<value>Course.hbm.xml</value>-->
+                           <!--*.hbm.xml" />-->
+    <!--</list>-->
+        <!--</property>-->
+        <!--...-->
+    <!--</bean>-->
+
+
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/course"/>
+        <!--<property name="url" value="jdbc:mysql://localhost/course;create=true"/>-->
+        <property name="username" value="root"/>
+        <property name="password" value="xander"/>
+        <property name="maxActive" value="5" />
+    </bean>
+
+
+
+
+</beans>

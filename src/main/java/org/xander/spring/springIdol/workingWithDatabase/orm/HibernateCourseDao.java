@@ -11,6 +11,10 @@ import java.util.List;
 public class HibernateCourseDao implements CourseDao {
     private SessionFactory sessionFactory;
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public HibernateCourseDao() {
 //        By default, it loads hibernate.cfg.xml from the classpath root when you call the
 //        configure() method.

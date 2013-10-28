@@ -1,0 +1,41 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--<bean id="entityManagerFactory"-->
+          <!--class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">-->
+        <!--<property name="persistenceUnitName" value="course" />-->
+    <!--</bean>-->
+    <bean id="courseDao"
+          class="org.xander.spring.springIdol.workingWithDatabase.orm.JpaCourseDao">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <!--<jee:jndi-lookup id="entityManagerFactory" jndi-name="jpa/coursePU" />-->
+
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/course"/>
+        <!--<property name="url" value="jdbc:mysql://localhost/course;create=true"/>-->
+        <property name="username" value="root"/>
+        <property name="password" value="xander"/>
+        <property name="maxActive" value="5" />
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="course" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+                <property name="showSql" value="true" />
+                <property name="generateDdl" value="true" />
+            </bean>
+        </property>
+    </bean>
+
+</beans>

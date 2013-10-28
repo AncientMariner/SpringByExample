@@ -3,11 +3,18 @@ package org.xander.spring.springIdol.workingWithDatabase.orm;
 import javax.persistence.*;
 import java.util.List;
 
-public class JpaCourseDao implements CourseDao {
+public class JpaCourseDao implements CourseDao{
     private EntityManagerFactory entityManagerFactory;
-    public JpaCourseDao() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("course");
+//    public JpaCourseDao() {
+//        entityManagerFactory = Persistence.createEntityManagerFactory("course");
+//    }
+
+
+    public void setEntityManagerFactory(
+            EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
+
     public void store(CourseAnnotated course) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction tx = manager.getTransaction();
