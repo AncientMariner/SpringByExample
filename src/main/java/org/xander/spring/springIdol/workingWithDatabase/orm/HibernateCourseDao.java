@@ -1,15 +1,21 @@
 package org.xander.spring.springIdol.workingWithDatabase.orm;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+//if you want the Hibernate exceptions to be
+//translated into Spring’s DataAccessException for consistent exception handling, you have to apply the
+//@Repository annotation to your DAO class that requires exception translation
+@Repository("courseDao")
 public class HibernateCourseDao implements CourseDao {
     private SessionFactory sessionFactory;
 
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -27,53 +33,27 @@ public class HibernateCourseDao implements CourseDao {
 
     }
 
+    @Transactional
     public void store(CourseAnnotated course) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.getTransaction();
-        try {
-            tx.begin();
-            session.saveOrUpdate(course);
-            tx.commit();
-        } catch (RuntimeException e) {
-            // when database is not yet created - Exception in thread "main"
-            // org.hibernate.TransactionException:
-            // Transaction not successfully started is thrown !!!
-            tx.rollback();
-            throw e;
-        } finally {
-            session.close();
-        }
+        sessionFactory.getCurrentSession().saveOrUpdate(course);
     }
+
+    @Transactional
     public void delete(Long courseId) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.getTransaction();
-        try {
-            tx.begin();
-            CourseAnnotated course = (CourseAnnotated) session.get(CourseAnnotated.class, courseId);
-            session.delete(course);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            throw e;
-        } finally {
-            session.close();
-        }
+        CourseAnnotated course = (CourseAnnotated) sessionFactory.getCurrentSession().get(
+                CourseAnnotated.class, courseId);
+        sessionFactory.getCurrentSession().delete(course);
     }
+    @Transactional(readOnly = true)
     public CourseAnnotated findById(Long courseId) {
-        Session session = sessionFactory.openSession();
-        try {
-            return (CourseAnnotated) session.get(CourseAnnotated.class, courseId);
-        } finally {
-            session.close();
-        }
+        return (CourseAnnotated) sessionFactory.getCurrentSession().get(
+                CourseAnnotated.class, courseId);
     }
+    @Transactional(readOnly = true)
     public List<CourseAnnotated> findAll() {
-        Session session = sessionFactory.openSession();
-        try {
-            Query query = session.createQuery("from CourseAnnotated ");
-            return query.list();
-        } finally {
-            session.close();
-        }
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "from CourseAnnotated");
+        return query.list();
     }
+
 }
