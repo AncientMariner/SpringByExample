@@ -52,7 +52,7 @@ public class Main {
 //        ApplicationContext context =
 //                new ClassPathXmlApplicationContext("org/xander/spring/springIdol/workingWithDatabase/orm/beans-hibernate.xml");
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("org/xander/spring/springIdol/workingWithDatabase/orm/beans-jpa.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("org/xander/spring/springIdol/workingWithDatabase/orm/beans-hibernate.xml");
 
 
         CourseDao courseDao = (CourseDao) context.getBean("courseDao");

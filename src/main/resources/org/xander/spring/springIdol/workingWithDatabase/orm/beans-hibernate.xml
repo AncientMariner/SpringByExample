@@ -81,7 +81,6 @@
 
     <bean name="courseDao"
           class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">
-        <property name="hibernateTemplate" ref="hibernateTemplate" />
     </bean>
 
 
