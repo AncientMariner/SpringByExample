@@ -1,46 +1,46 @@
 package org.xander.spring.springIdol.workingWithDatabase.orm;
 
-import org.springframework.orm.jpa.JpaTemplate;
+import org.springframework.orm.jpa.support.JpaDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
-public class JpaCourseDao implements CourseDao{
-    private EntityManagerFactory entityManagerFactory;
+public class JpaCourseDao extends JpaDaoSupport implements CourseDao{
+//    private EntityManagerFactory entityManagerFactory;
 //    public JpaCourseDao() {
 //        entityManagerFactory = Persistence.createEntityManagerFactory("course");
 //    }
 
 
-    private JpaTemplate jpaTemplate;
-    public void setJpaTemplate(JpaTemplate jpaTemplate) {
-        this.jpaTemplate = jpaTemplate;
-    }
-    @Transactional
-    public void store(CourseAnnotated course) {
-        jpaTemplate.merge(course);
-    }
+//    private JpaTemplate jpaTemplate;
+//    public void setJpaTemplate(JpaTemplate jpaTemplate) {
+//        this.jpaTemplate = jpaTemplate;
+//    }
+@Transactional
+public void store(CourseAnnotated course) {
+    getJpaTemplate().merge(course);
+}
     @Transactional
     public void delete(Long courseId) {
-        CourseAnnotated course = jpaTemplate.find(CourseAnnotated.class, courseId);
-        jpaTemplate.remove(course);
+        CourseAnnotated course = getJpaTemplate().find(CourseAnnotated.class, courseId);
+        getJpaTemplate().remove(course);
     }
     @Transactional(readOnly = true)
     public CourseAnnotated findById(Long courseId) {
-        return jpaTemplate.find(CourseAnnotated.class, courseId);
+        return getJpaTemplate().find(CourseAnnotated.class, courseId);
     }
-
+    @Transactional(readOnly = true)
     public List<CourseAnnotated> findAll() {
-        return jpaTemplate.find("select course from CourseAnnotated course");
+        return getJpaTemplate().find("from CourseAnnotated");
     }
 
 
 
-    public void setEntityManagerFactory(
-            EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-    }
+//
+//    public void setEntityManagerFactory(
+//            EntityManagerFactory entityManagerFactory) {
+//        this.entityManagerFactory = entityManagerFactory;
+//    }
 
 //    public void store(CourseAnnotated course) {
 //        EntityManager manager = entityManagerFactory.createEntityManager();

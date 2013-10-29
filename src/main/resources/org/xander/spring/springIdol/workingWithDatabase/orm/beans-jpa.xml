@@ -53,6 +53,8 @@
     <bean name="courseDao"
           class="org.xander.spring.springIdol.workingWithDatabase.orm.JpaCourseDao">
         <property name="jpaTemplate" ref="jpaTemplate" />
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+
     </bean>
 
 
