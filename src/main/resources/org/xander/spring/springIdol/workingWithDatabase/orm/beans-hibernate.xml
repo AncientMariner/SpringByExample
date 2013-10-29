@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
        http://www.springframework.org/schema/jee
-       http://www.springframework.org/schema/jee/spring-jee.xsd">
+       http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <bean id="courseDao"
-          class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+    <!--<bean id="courseDao"-->
+          <!--class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">-->
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+    <!--</bean>-->
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <!--<property name="configLocation" value="classpath:hibernate.cfg.xml" />-->
@@ -66,6 +66,23 @@
         <property name="maxActive" value="5" />
     </bean>
 
+
+    <tx:annotation-driven />
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean name="courseDao"
+          class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">
+        <property name="hibernateTemplate" ref="hibernateTemplate" />
+    </bean>
 
 
 
