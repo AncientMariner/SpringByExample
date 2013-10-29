@@ -4,7 +4,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
@@ -23,8 +22,8 @@ public class HibernateCourseDao implements CourseDao {
 //        sessionFactory = configuration.buildSessionFactory();
 
         // For JPA annotation
-        Configuration configuration = new Configuration().configure();
-        sessionFactory = configuration.buildSessionFactory();
+//        Configuration configuration = new Configuration().configure();
+//        sessionFactory = configuration.buildSessionFactory();
 
     }
 

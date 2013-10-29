@@ -81,6 +81,8 @@
 
     <bean name="courseDao"
           class="org.xander.spring.springIdol.workingWithDatabase.orm.HibernateCourseDao">
+
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
 
