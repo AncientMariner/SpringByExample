@@ -5,5 +5,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="reservationService" class="org.xander.spring.springIdol.springMVC.service.ReservationServiceImpl" />
+    <bean id="memberService" class="org.xander.spring.springIdol.springMVC.service.MemberService" />
 
 </beans>
