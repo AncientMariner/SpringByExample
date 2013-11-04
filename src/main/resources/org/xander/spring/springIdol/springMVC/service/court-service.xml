@@ -7,16 +7,6 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-    <mvc:interceptors>
-        <!-- This bit of XML will intercept all URLs - which is what you want in a web app -->
-        <bean id="measurementInterceptor" class="org.xander.spring.springIdol.springMVC.web.MeasurementInterceptor" />
-
-        <!-- This bit of XML will apply certain URLs to certain interceptors -->
-        <mvc:interceptor>
-            <mvc:mapping path="/welcome"/>
-            <bean class="org.xander.spring.springIdol.springMVC.web.MeasurementInterceptor" />
-        </mvc:interceptor>
-    </mvc:interceptors>
 
     <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
     <!--<property name="interceptors">-->
@@ -29,8 +19,43 @@
     <bean id="reservationService" class="org.xander.spring.springIdol.springMVC.service.ReservationServiceImpl" />
     <bean id="memberService" class="org.xander.spring.springIdol.springMVC.service.MemberService" />
 
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
+    </bean>
+
+    <!--<bean id="localeResolver"-->
+    <!--class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />-->
+    <!--<bean id="localeResolver"-->
+    <!--class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+    <!--<property name="cookieName" value="language" />-->
+    <!--<property name="cookieMaxAge" value="3600" />-->
+    <!--<property name="defaultLocale" value="en" />-->
+    <!--</bean>-->
 
 
 
+
+
+    <mvc:interceptors>
+        <!-- This bit of XML will intercept all URLs - which is what you want in a web app -->
+        <bean id="measurementInterceptor" class="org.xander.spring.springIdol.springMVC.web.MeasurementInterceptor" />
+
+        <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language" />
+        </bean>
+
+        <!-- This bit of XML will apply certain URLs to certain interceptors -->
+        <mvc:interceptor>
+            <mvc:mapping path="/welcome"/>
+            <bean class="org.xander.spring.springIdol.springMVC.web.MeasurementInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+    </bean>
 
 </beans>
