@@ -25,10 +25,10 @@ public class MemberController {
         model.addAttribute("guests", memberService.list());
         return "memberList";
     }
-    @RequestMapping(value={"remove","delete"},method= RequestMethod.GET)
+    @RequestMapping(value={"remove","delete"}, method= RequestMethod.GET)
     public String removeMember(
             @RequestParam("memberName") String memberName) {
         memberService.remove(memberName);
-        return "redirect:";
+        return "redirect:../welcome";
     }
 }

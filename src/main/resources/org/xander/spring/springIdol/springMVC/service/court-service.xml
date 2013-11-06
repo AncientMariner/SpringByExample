@@ -33,10 +33,6 @@
     <!--<property name="defaultLocale" value="en" />-->
     <!--</bean>-->
 
-
-
-
-
     <mvc:interceptors>
         <!-- This bit of XML will intercept all URLs - which is what you want in a web app -->
         <bean id="measurementInterceptor" class="org.xander.spring.springIdol.springMVC.web.MeasurementInterceptor" />
@@ -52,10 +48,59 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-
+<!--need to be declared in order to provide work with messages.properties files-->
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages" />
     </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="org.xander.spring.springIdol.springMVC.web.ReservationBindingInitializer" />
+        </property>
+    </bean>
+
+
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="viewClass"-->
+                  <!--value="org.springframework.web.servlet.view.JstlView" />-->
+        <!--<property name="prefix" value="/WEB-INF/jsp/" />-->
+        <!--<property name="suffix" value=".jsp" />-->
+    <!--</bean>-->
+    <!--<bean class="org.springframework.web.servlet.view.XmlViewResolver">-->
+        <!--<property name="location">-->
+            <!--<value>/WEB-INF/court-views.xml</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver">-->
+        <!--<property name="basename" value="views" />-->
+    <!--</bean>-->
+
+    <!--<bean id="contentNegotiatingResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+        <!--<property name="order"-->
+            <!--value="#{T(org.springframework.core.Ordered).HIGHEST_PRECEDENCE}" />-->
+        <!--<property name="mediaTypes">-->
+            <!--<map>-->
+                <!--<entry key="html" value="text/html"/>-->
+                <!--<entry key="pdf" value="application/pdf"/>-->
+                <!--<entry key="xsl" value="application/vnd.ms-excel"/>-->
+                <!--<entry key="xml" value="application/xml"/>-->
+                <!--<entry key="json" value="application/json"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="resourceBundleResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">-->
+        <!--&lt;!&ndash;need to set the highest priority of execution&ndash;&gt;-->
+        <!--<property name="order" value="#{contentNegotiatingResolver.order+1}" />-->
+    <!--</bean>-->
+    <!--<bean id="secondaryResourceBundleResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">-->
+        <!--<property name="basename" value="secondaryviews" />-->
+        <!--<property name="order" value="#{resourceBundleResolver.order+1}" />-->
+    <!--</bean>-->
+    <!--<bean id="internalResourceResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="order" value="#{secondaryResourceBundleResolver.order+1}" />-->
+    <!--</bean>-->
+
 
 </beans>

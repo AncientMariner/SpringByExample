@@ -5,6 +5,7 @@ import org.xander.spring.springIdol.springMVC.domain.Reservation;
 import org.xander.spring.springIdol.springMVC.domain.SportType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ReservationServiceImpl implements ReservationService {
     private List<Reservation> reservations;
 
     public ReservationServiceImpl() {
-        reservations = new ArrayList<Reservation>();
+        reservations = new ArrayList<>();
         reservations.add(new Reservation("Tennis #1",
                          new GregorianCalendar(2008, 0, 14).getTime(),
                          16,
@@ -35,4 +36,32 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return result;
     }
+
+    @Override
+    public void make(Reservation reservation) throws ReservationNotAvailableException {
+        for (Reservation made : reservations) {
+            if (made.getCourtName().equals(reservation.getCourtName())
+                    && made.getDate().equals(reservation.getDate())
+                    && made.getHour() == reservation.getHour()) {
+                throw new ReservationNotAvailableException(reservation.getCourtName(), reservation.getDate(), reservation.getHour());
+            }
+        }
+        reservations.add(reservation);
+    }
+    public List<SportType> getAllSportTypes() {
+        return Arrays.asList(new SportType[]{TENNIS, SOCCER});
+    }
+
+    public SportType getSportType(int sportTypeId) {
+        switch (sportTypeId) {
+            case 1:
+                return TENNIS;
+            case 2:
+                return SOCCER;
+            default:
+                return null;
+        }
+    }
+
+
 }
