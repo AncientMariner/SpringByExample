@@ -1,5 +1,6 @@
 package org.xander.spring.springIdol.springMVC.service;
 
+import org.xander.spring.springIdol.springMVC.domain.PeriodicReservation;
 import org.xander.spring.springIdol.springMVC.domain.Reservation;
 import org.xander.spring.springIdol.springMVC.domain.SportType;
 
@@ -10,4 +11,6 @@ public interface ReservationService {
     public void make(Reservation reservation) throws ReservationNotAvailableException;
     public List<SportType> getAllSportTypes();
     public SportType getSportType(int sportTypeId);
+    public void makePeriodic(PeriodicReservation periodicReservation) throws ReservationNotAvailableException;
+
 }

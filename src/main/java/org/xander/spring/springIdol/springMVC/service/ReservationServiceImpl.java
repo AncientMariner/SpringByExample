@@ -1,13 +1,11 @@
 package org.xander.spring.springIdol.springMVC.service;
 
+import org.xander.spring.springIdol.springMVC.domain.PeriodicReservation;
 import org.xander.spring.springIdol.springMVC.domain.Player;
 import org.xander.spring.springIdol.springMVC.domain.Reservation;
 import org.xander.spring.springIdol.springMVC.domain.SportType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class ReservationServiceImpl implements ReservationService {
     public static final SportType TENNIS = new SportType(1, "Tennis");
@@ -63,5 +61,22 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    @Override
+    public void makePeriodic(PeriodicReservation periodicReservation) throws ReservationNotAvailableException {
+        Calendar fromCalendar = Calendar.getInstance();
+        fromCalendar.setTime(periodicReservation.getFromDate());
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.setTime(periodicReservation.getToDate());
 
+        while (fromCalendar.before(toCalendar)) {
+            Reservation reservation = new Reservation();
+            reservation.setCourtName(periodicReservation.getCourtName());
+            reservation.setDate(fromCalendar.getTime());
+            reservation.setHour(periodicReservation.getHour());
+            reservation.setPlayer(periodicReservation.getPlayer());
+            make(reservation);
+            fromCalendar.add(Calendar.DATE, periodicReservation.getPeriod());
+        }
+
+    }
 }
