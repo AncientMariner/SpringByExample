@@ -11,8 +11,8 @@ public class MemberService {
 
     public MemberService() {
         members = new ArrayList<>();
-        Member member1 = new Member("Number 1", new Double(1234));
-        Member member2 = new Member("Number 2", new Double(1233));
+        Member member1 = new Member("Number 1", new Double(1234), "1232", "email");
+        Member member2 = new Member("Number 2", new Double(1233), "1232", "email");
         members.add(member1);
         members.add(member2);
     }
