@@ -27,4 +27,6 @@ public class MessageListController {
         model.addAttribute("messages",messages);
         return "messageList";
     }
+
+
 }

@@ -4,6 +4,10 @@
     <title>Message List</title>
 </head>
 <body>
+<%--default--%>
+<%--<a href="<c:url value="/spring_security_login" />">Login</a>--%>
+<a href="<c:url value="login" />">Login</a>
+
 <c:forEach items="${messages}" var="message">
     <table>
         <tr>

@@ -11,7 +11,12 @@
                        access="ROLE_USER,ROLE_ANONYMOUS" />
         <intercept-url pattern="/messagePost*" access="ROLE_USER" />
         <intercept-url pattern="/messageDelete*" access="ROLE_ADMIN" />
-        <http-basic />
+        <!--<http-basic />-->
+        <form-login login-page="/login"
+                    default-target-url="/messageList"
+                    authentication-failure-url="/login?error=true"
+                    />
+        <logout logout-success-url="/logout" />
 
     </http>
     <authentication-manager>
