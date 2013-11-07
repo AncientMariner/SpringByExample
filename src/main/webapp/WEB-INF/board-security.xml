@@ -8,7 +8,7 @@
 
     <http >
         <intercept-url pattern="/messageList*"
-                       access="ROLE_USER,ROLE_ANONYMOUS" />
+                       access="ROLE_USER,ROLE_ANONYMOUS, ROLE_GUEST" />
         <intercept-url pattern="/messagePost*" access="ROLE_USER" />
         <intercept-url pattern="/messageDelete*" access="ROLE_ADMIN" />
         <!--<http-basic />-->
@@ -17,6 +17,8 @@
                     authentication-failure-url="/login?error=true"
                     />
         <logout logout-success-url="/logout" />
+        <anonymous username="guest" granted-authority="ROLE_GUEST" />
+        <remember-me />
 
     </http>
     <authentication-manager>
