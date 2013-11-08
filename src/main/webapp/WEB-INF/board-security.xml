@@ -6,76 +6,77 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http >
-        <intercept-url pattern="/messageList*"
-                       access="ROLE_USER,ROLE_ANONYMOUS, ROLE_GUEST" />
-        <intercept-url pattern="/messagePost*" access="ROLE_USER" />
-        <intercept-url pattern="/messageDelete*" access="ROLE_ADMIN" />
-        <!--<http-basic />-->
-        <form-login login-page="/login"
-                    default-target-url="/messageList"
-                    authentication-failure-url="/login?error=true"
-                    />
-        <logout logout-success-url="/logout" />
-        <anonymous username="guest" granted-authority="ROLE_GUEST" />
-        <remember-me />
+    <!--<http >-->
+        <!--<intercept-url pattern="/messageList*"-->
+                       <!--access="ROLE_USER,ROLE_ANONYMOUS, ROLE_GUEST" />-->
+        <!--<intercept-url pattern="/messagePost*" access="ROLE_USER" />-->
+        <!--<intercept-url pattern="/messageDelete*" access="ROLE_ADMIN" />-->
 
-    </http>
+        <!--&lt;!&ndash;<http-basic />&ndash;&gt;-->
+        <!--<form-login login-page="/login"-->
+                    <!--default-target-url="/messageList"-->
+                    <!--authentication-failure-url="/login?error=true"-->
+                    <!--/>-->
+        <!--<logout logout-success-url="/logout" />-->
+        <!--<anonymous username="guest" granted-authority="ROLE_GUEST" />-->
+        <!--<remember-me />-->
+
+    <!--</http>-->
     <authentication-manager>
         <authentication-provider>
-            <!--<user-service>-->
-                <!--<user name="admin" password="secret"-->
-                      <!--authorities="ROLE_ADMIN,ROLE_USER" />-->
-                <!--<user name="user1" password="1111" authorities="ROLE_USER" />-->
-                                        <!--<user-service properties="/WEB-INF/users.properties" />-->
-            <!--</user-service>-->
-            <password-encoder hash="md5" />
             <user-service>
-                <user name="admin" password="5ebe2294ecd0e0f08eab7690d2a6ee69" authorities="ROLE_ADMIN, ROLE_USER" />
-                <user name="user1" password="b59c67bf196a4758191e42f76670ceba" authorities="ROLE_USER" />
-                <user name="user2" password="934b535800b1cba8f96a5d72f72f1611" disabled="true" authorities="ROLE_USER" />
+                <user name="admin" password="secret"
+                      authorities="ROLE_ADMIN,ROLE_USER" />
+                <user name="user1" password="1111" authorities="ROLE_USER" />
+                <!--<user-service properties="/WEB-INF/users.properties" />-->
             </user-service>
         </authentication-provider>
     </authentication-manager>
 
-    <!--<authentication-manager>-->
-        <!--<authentication-provider>-->
-            <!--<password-encoder hash="md5" />-->
-            <!--<jdbc-user-service data-source-ref="dataSource" cache-ref="userCache"/>-->
-        <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
+<!--default one, the same as without configuration-->
+    <!--<beans:bean id="_accessManager"-->
+          <!--class="org.springframework.security.access.vote.AffirmativeBased">-->
+        <!--<beans:property name="decisionVoters">-->
+            <!--<beans:list>-->
+                <!--RoleVoter votes for an access control decision based on a user’s role. It will only process access
+                attributes that start with the ROLE_ prefix, but this prefix can be customized. It votes to grant access if the
+                user has the same role as required to access the resource or to deny access if the user lacks any role
+                required to access the resource. If the resource does not have an access attribute starting with ROLE_, it
+                will abstain from voting.-->
+                <!--<beans:bean class="org.springframework.security.access.vote.RoleVoter" />-->
+                <!--AuthenticatedVoter votes for an access control decision based on a user’s authentication level. It
+                will only process the access attributes IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_REMEMBERED, and
+                IS_AUTHENTICATED_ANONYMOUSLY. It votes to grant access if the user’s authentication level is higher than
+                the required attribute. From highest to lowest, authentication levels are fully authenticated,
+                authentication remembered, and anonymously authenticated.-->
+                <!--<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />-->
+            <!--</beans:list>-->
+        <!--</beans:property>-->
+    <!--</beans:bean>-->
 
-
-    <beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
-        <beans:property name="cache" ref="userEhCache" />
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter" />
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+                <beans:bean class="org.xander.spring.springIdol.springSecurity.security.IpAddressVoter" />
+            </beans:list>
+        </beans:property>
     </beans:bean>
 
-    <beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-        <beans:property name="cacheManager" ref="cacheManager" />
-        <beans:property name="cacheName" value="userCache" />
-    </beans:bean>
+    <http access-decision-manager-ref="accessDecisionManager">
+        <intercept-url pattern="/messageList*" access="ROLE_USER,ROLE_GUEST" />
+        <intercept-url pattern="/messagePost*" access="ROLE_USER" />
+        <!--please pay attention NOT LOGGED IN USERS from localhost could delete messages-->
+        <intercept-url pattern="/messageDelete*" access="ROLE_ADMIN,IP_LOCAL_HOST" />
 
-    <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
-
-
-
-
-    <!--<authentication-manager>-->
-        <!--<authentication-provider>-->
-            <!--<jdbc-user-service data-source-ref="dataSource" />-->
-
-
-            <!--<jdbc-user-service data-source-ref="dataSource"-->
-                               <!--users-by-username-query= "SELECT username, password, 'true' as enabled FROM member WHERE username = ?"-->
-                               <!--authorities-by-username-query= "SELECT-->
-                               <!--member.username,-->
-                               <!--member_role.role as authorities-->
-                               <!--FROM member, member_role-->
-                               <!--WHERE-->
-                               <!--member.username = ? AND member.id = member_role.member_id"-->
-                    <!--/>-->
-
-        <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
+        <form-login login-page="/login"
+                    default-target-url="/messageList"
+                    authentication-failure-url="/login?error=true"
+                />
+        <logout logout-success-url="/logout" />
+        <anonymous username="guest" granted-authority="ROLE_GUEST" />
+        <remember-me />
+    </http>
 
 </beans:beans>
