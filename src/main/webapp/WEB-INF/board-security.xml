@@ -23,11 +23,59 @@
     </http>
     <authentication-manager>
         <authentication-provider>
+            <!--<user-service>-->
+                <!--<user name="admin" password="secret"-->
+                      <!--authorities="ROLE_ADMIN,ROLE_USER" />-->
+                <!--<user name="user1" password="1111" authorities="ROLE_USER" />-->
+                                        <!--<user-service properties="/WEB-INF/users.properties" />-->
+            <!--</user-service>-->
+            <password-encoder hash="md5" />
             <user-service>
-                <user name="admin" password="secret"
-                      authorities="ROLE_ADMIN,ROLE_USER" />
-                <user name="user1" password="1111" authorities="ROLE_USER" />
+                <user name="admin" password="5ebe2294ecd0e0f08eab7690d2a6ee69" authorities="ROLE_ADMIN, ROLE_USER" />
+                <user name="user1" password="b59c67bf196a4758191e42f76670ceba" authorities="ROLE_USER" />
+                <user name="user2" password="934b535800b1cba8f96a5d72f72f1611" disabled="true" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
     </authentication-manager>
+
+    <!--<authentication-manager>-->
+        <!--<authentication-provider>-->
+            <!--<password-encoder hash="md5" />-->
+            <!--<jdbc-user-service data-source-ref="dataSource" cache-ref="userCache"/>-->
+        <!--</authentication-provider>-->
+    <!--</authentication-manager>-->
+
+
+    <beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+        <beans:property name="cache" ref="userEhCache" />
+    </beans:bean>
+
+    <beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <beans:property name="cacheManager" ref="cacheManager" />
+        <beans:property name="cacheName" value="userCache" />
+    </beans:bean>
+
+    <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+
+
+
+    <!--<authentication-manager>-->
+        <!--<authentication-provider>-->
+            <!--<jdbc-user-service data-source-ref="dataSource" />-->
+
+
+            <!--<jdbc-user-service data-source-ref="dataSource"-->
+                               <!--users-by-username-query= "SELECT username, password, 'true' as enabled FROM member WHERE username = ?"-->
+                               <!--authorities-by-username-query= "SELECT-->
+                               <!--member.username,-->
+                               <!--member_role.role as authorities-->
+                               <!--FROM member, member_role-->
+                               <!--WHERE-->
+                               <!--member.username = ? AND member.id = member_role.member_id"-->
+                    <!--/>-->
+
+        <!--</authentication-provider>-->
+    <!--</authentication-manager>-->
+
 </beans:beans>
