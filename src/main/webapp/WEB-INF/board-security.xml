@@ -59,16 +59,16 @@
             <beans:list>
                 <beans:bean class="org.springframework.security.access.vote.RoleVoter" />
                 <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-                <beans:bean class="org.xander.spring.springIdol.springSecurity.security.IpAddressVoter" />
+                <!--<beans:bean class="org.xander.spring.springIdol.springSecurity.security.IpAddressVoter" />-->
             </beans:list>
         </beans:property>
     </beans:bean>
 
     <http access-decision-manager-ref="accessDecisionManager">
-        <intercept-url pattern="/messageList*" access="ROLE_USER,ROLE_GUEST" />
-        <intercept-url pattern="/messagePost*" access="ROLE_USER" />
+        <!--<intercept-url pattern="/messageList*" access="ROLE_USER,ROLE_GUEST" />-->
+        <!--<intercept-url pattern="/messagePost*" access="ROLE_USER" />-->
         <!--please pay attention NOT LOGGED IN USERS from localhost could delete messages-->
-        <intercept-url pattern="/messageDelete*" access="ROLE_ADMIN,IP_LOCAL_HOST" />
+        <!--<intercept-url pattern="/messageDelete*" access="ROLE_ADMIN,IP_LOCAL_HOST" />-->
 
         <form-login login-page="/login"
                     default-target-url="/messageList"
@@ -79,16 +79,6 @@
         <remember-me />
     </http>
 
-    <global-method-security access-decision-manager-ref="accessDecisionManager">
-        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.list*(..))"
-                          access="ROLE_USER,ROLE_GUEST" />
-        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.post*(..))"
-                          access="ROLE_USER" />
-        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.delete*(..))"
-                          access="ROLE_ADMIN,IP_LOCAL_HOST" />
-        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.find*(..))"
-                          access="ROLE_USER,ROLE_GUEST" />
-    </global-method-security>
-
+    <global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager" />
 
 </beans:beans>
