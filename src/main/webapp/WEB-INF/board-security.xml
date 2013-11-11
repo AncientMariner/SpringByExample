@@ -79,4 +79,16 @@
         <remember-me />
     </http>
 
+    <global-method-security access-decision-manager-ref="accessDecisionManager">
+        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.list*(..))"
+                          access="ROLE_USER,ROLE_GUEST" />
+        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.post*(..))"
+                          access="ROLE_USER" />
+        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.delete*(..))"
+                          access="ROLE_ADMIN,IP_LOCAL_HOST" />
+        <protect-pointcut expression= "execution(* org.xander.spring.springIdol.springSecurity.service.*Service.find*(..))"
+                          access="ROLE_USER,ROLE_GUEST" />
+    </global-method-security>
+
+
 </beans:beans>
