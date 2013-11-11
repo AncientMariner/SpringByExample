@@ -1,10 +1,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Message Post</title>
 </head>
 <body>
+<security:authentication property="name" var="name" />
 <form:form method="POST" modelAttribute="message">
+    <input type="hidden" value="${name}" name="author" />
     <table>
         <tr>
             <td>Title</td>

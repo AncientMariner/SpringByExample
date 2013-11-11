@@ -6,7 +6,7 @@
     <title>Message List</title>
 </head>
 <body>
-<h2>Welcome! <security:authentication property="name" /></h2>
+<h2>Welcome! <security:authentication property="name" var="name" /></h2>
 <security:authentication property="authorities" var="authorities" />
 <ul>
     <c:forEach items="${authorities}" var="authority">
@@ -22,10 +22,15 @@
 
 <c:forEach items="${messages}" var="message">
     <table>
+        <security:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
+        <%--<security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">--%>
+        <%--<security:authorize ifNotGranted="ROLE_GUEST">--%>
+
         <tr>
             <td>Author</td>
             <td>${message.author}</td>
         </tr>
+        </security:authorize>
         <tr>
             <td>Title</td>
             <td>${message.title}</td>

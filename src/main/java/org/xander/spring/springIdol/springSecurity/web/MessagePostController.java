@@ -14,16 +14,19 @@ import org.xander.spring.springIdol.springSecurity.service.MessageBoardService;
 @RequestMapping("/messagePost*")
 public class MessagePostController {
     private MessageBoardService messageBoardService;
+
     @Autowired
     public void MessagePostController(MessageBoardService messageBoardService) {
         this.messageBoardService = messageBoardService;
     }
+
     @RequestMapping(method= RequestMethod.GET)
     public String setupForm(Model model) {
         Message message = new Message();
         model.addAttribute("message",message);
         return "messagePost";
     }
+
     @RequestMapping(method=RequestMethod.POST)
     public String onSubmit(@ModelAttribute("message") Message message,
                            BindingResult result) {
