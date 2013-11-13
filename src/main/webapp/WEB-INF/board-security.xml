@@ -79,6 +79,7 @@
         <remember-me />
     </http>
 
-    <global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager" />
+    <!--<global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager" />-->
+    <global-method-security secured-annotations="enabled" access-decision-manager-ref="aclAccessDecisionManager" />
 
 </beans:beans>

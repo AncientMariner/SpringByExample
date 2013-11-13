@@ -25,12 +25,13 @@
         <security:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
         <%--<security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">--%>
         <%--<security:authorize ifNotGranted="ROLE_GUEST">--%>
-
+        <%--<security:accesscontrollist domainObject="${message}" hasPermission="8,16">--%>
         <tr>
             <td>Author</td>
             <td>${message.author}</td>
         </tr>
         </security:authorize>
+        <%--</security:accesscontrollist>--%>
         <tr>
             <td>Title</td>
             <td>${message.title}</td>

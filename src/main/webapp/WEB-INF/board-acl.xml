@@ -1,10 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-
-
-
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="adminRole" class="org.springframework.security.core.authority.SimpleGrantedAuthority">
         <constructor-arg value="ROLE_ADMIN" />
@@ -43,4 +43,26 @@
         <property name="cacheName" value="aclCache" />
     </bean>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+    <bean id="aclMessageDeleteVoter" class="org.springframework.security.acls.AclEntryVoter">
+        <constructor-arg ref="aclService" />
+        <constructor-arg value="ACL_MESSAGE_DELETE" />
+        <constructor-arg>
+            <array>
+                <util:constant static-field="org.springframework.security.acls.domain.BasePermission.ADMINISTRATION" />
+                <util:constant static-field="org.springframework.security.acls.domain.BasePermission.DELETE" />
+            </array>
+        </constructor-arg>
+        <property name="processDomainObjectClass" value="org.xander.spring.springIdol.springSecurity.domain.Message" />
+    </bean>
+    <bean id="aclAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter" />
+                <ref local="aclMessageDeleteVoter" />
+            </list>
+        </property>
+    </bean>
+
+
 </beans>

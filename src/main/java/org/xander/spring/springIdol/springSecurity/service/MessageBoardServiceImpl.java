@@ -49,12 +49,13 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     }
 
     @Transactional
-    @Secured({"ROLE_ADMIN", "IP_LOCAL_HOST"})
+//    @Secured({"ROLE_ADMIN", "IP_LOCAL_HOST"})
+    @Secured("ACL_MESSAGE_DELETE")
     public synchronized void deleteMessage(Message message) {
         messages.remove(message.getId());
 
-        ObjectIdentity oid = new ObjectIdentityImpl(Message.class, message.getId());
-        mutableAclService.deleteAcl(oid, false);
+//        ObjectIdentity oid = new ObjectIdentityImpl(Message.class, message.getId());
+//        mutableAclService.deleteAcl(oid, false);
 
     }
 
