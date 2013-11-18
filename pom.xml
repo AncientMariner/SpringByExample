@@ -265,5 +265,10 @@
             <artifactId>testng</artifactId>
             <version>6.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.4</version>
+        </dependency>
     </dependencies>
 </project>
