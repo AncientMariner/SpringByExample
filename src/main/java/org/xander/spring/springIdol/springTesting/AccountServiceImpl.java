@@ -11,6 +11,7 @@ public class AccountServiceImpl implements AccountService {
         this.accountDao = accountDao;
     }
     public void createAccount(String accountNo) {
+        accountDao = new InMemoryAccountDao();
         accountDao.createAccount(new Account(accountNo, 0));
     }
     public void removeAccount(String accountNo) {
