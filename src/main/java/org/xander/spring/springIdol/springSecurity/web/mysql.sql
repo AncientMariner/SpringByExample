@@ -1,4 +1,3 @@
-
 CREATE TABLE USERS (
   USERNAME VARCHAR(10) NOT NULL,
   PASSWORD VARCHAR(32) NOT NULL,
@@ -33,7 +32,7 @@ CREATE TABLE acl_sid(
 );
 
 CREATE TABLE acl_class(
-  ID BIGINT not null,
+  ID BIGINT not null default 1,
   CLASS VARCHAR (100) not null,
   PRIMARY KEY (ID),
   UNIQUE (CLASS)
